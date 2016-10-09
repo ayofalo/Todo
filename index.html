@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <title> Firebase Todo</title>
+  </head>
+  <body>
+    <input type = "text" id ="input" placeholder = "Enter a todo task"/> 
+    <button id ="generate-todo">Generate Todo</button>
+    
+    <ul id = "todoitem">
+      <li></li>
+    </ul>  
+
+    <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+    <script>
+      
+      var config = {
+        apiKey: "AIzaSyALnTxXLYH7gAyVZcXOyemVq6XV4XH7xDg",
+        authDomain: "createtodolist.firebaseapp.com",
+        databaseURL: "https://createtodolist.firebaseio.com",
+        storageBucket: "createtodolist.appspot.com",
+        messagingSenderId: "579045395654"
+      };
+      firebase.initializeApp(config);
+  
+      var todoButton = document.getElementById('generate-todo')
+      var todoform = document.getElementById('input')
+      var todolist = document.getElementById('todoitem')
+      var todoRef = firebase.database().ref('list')
+
+    
+
+      todoRef.on('value', function (snap){
+        var data = snap.val()
+        var a = snap.numChildren()
+        var listItems = "";
+        for(i in data) {
+          listItems += '<li id ='+ i +' >' + data[i] + ' <button id ='+ i +' >Delete</button></li>' 
+          }
+        todolist.innerHTML = listItems       
+        
+        var Deletebutton = new Array;
+        var b = 0;
+        
+        while( b < a){
+          
+          for (i in data){
+            
+            console.log(b);
+
+            Deletebutton[b]= document.getElementById(i)
+            
+            console.log(Deletebutton[b]);
+            b ++;
+          }
+         
+          }
+      
+        function getid(item){
+          return item.id;
+          };
+
+          
+        Deletebutton[0].addEventListener('click', function(){
+          console.log("hi");
+          c = getid(Deletebutton[0]);
+          console.log(c);
+          todoRef.child(c).remove();
+          }) 
+
+        Deletebutton[1].addEventListener('click', function(){
+          console.log("hi");
+          c = getid(Deletebutton[1]);
+          console.log(c);
+          todoRef.child(c).remove();
+          }) 
+
+        Deletebutton[2].addEventListener('click', function(){
+          console.log("hi");
+          c = getid(Deletebutton[2]);
+          console.log(c);
+          todoRef.child(c).remove();
+          }) 
+
+        Deletebutton[3].addEventListener('click', function(){
+          console.log("hi");
+          c = getid(Deletebutton[3]);
+          console.log(c);
+          todoRef.child(c).remove();
+          })
+
+        Deletebutton[4].addEventListener('click', function(){
+          console.log("hi");
+          c = getid(Deletebutton[4]);
+          console.log(c);
+          todoRef.child(c).remove();
+          }) 
+        
+      
+      })
+
+      var addToList = function(todoinstance){  
+        todoRef.push(todoinstance, function(){ 
+          todoform.value = ""
+          })      
+        }
+        
+      todoButton.addEventListener('click', function(){
+        var  todoinstance = todoform.value
+        addToList(todoinstance)
+        
+        })
+
+        
+
+        
+      </script>   
+
+  </body>
+</html>
